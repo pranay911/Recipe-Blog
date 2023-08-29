@@ -1,7 +1,7 @@
 //Express Server
 const express = require("express");
 //express layout -- Creating Template
-const expressLayout = require("express-ejs-layoutss");
+const expressLayout = require("express-ejs-layouts");
 
 //express app
 const app = express();
@@ -20,6 +20,7 @@ app.use(expressLayout);
 
 //all layout store
 app.set("layout", "./layouts/main");
+app.set("view engine", "ejs");
 
 // Routes
 const routes = require("./server/routes/recipeRoutes.js");
