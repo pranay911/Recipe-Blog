@@ -2,12 +2,17 @@
 const express = require("express");
 //express layout -- Creating Template
 const expressLayout = require("express-ejs-layouts");
+//Database
+const connectDB = require("./server/models/database");
 
 //express app
 const app = express();
 const port = process.env.PORT || 3000;
 
 require("dotenv").config();
+
+//Database connection
+connectDB();
 
 // Middlewares
 app.use(express.urlencoded({ extended: true }));
