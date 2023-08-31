@@ -7,3 +7,6 @@ db.on("error", console.error.bind("Connection Error"));
 db.once("open", function () {
   console.log("DB CONNECTED");
 });
+
+//Models
+require("./Category");
