@@ -3,7 +3,7 @@ const Category = require("../models/Category");
 
 /*
  * GET/ *
- * Homepage *
+ * Homepage -- index.ejs*
  */
 
 exports.homepage = async (req, res) => {
@@ -53,3 +53,21 @@ exports.homepage = async (req, res) => {
 // }
 // insertDummyCategoryData();
 // module.exports = insertDummyCategoryData;
+
+/*
+ * GET/categories *
+ * Homepage --categories.ejs*
+ */
+
+exports.exploreCategories = async (req, res) => {
+  try {
+    //DB Query to Grad categories
+    //Only 5 categories can Display
+    const limitNumber = 5;
+    const categories = await Category.find({}).limit(limitNumber);
+    res.render("categories", { title: "Recipe Blog - Categories page", categories });
+  } catch (error) {
+    // console.log(error);
+    res.send("An error Occured::");
+  }
+};
