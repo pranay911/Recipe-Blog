@@ -11,8 +11,13 @@ exports.homepage = async (req, res) => {
     //DB Query to Grad categories
     //Only 5 categories can Display
     const limitNumber = 5;
+    // Categories Data
     const categories = await Category.find({}).limit(limitNumber);
-    res.render("index", { title: "Recipe Blog - Homepage", categories });
+    // Recipe Data
+    const latest = await Recipe.find({}).sort({ _id: -1 }).limit(limitNumber);
+
+    const food = { latest };
+    res.render("index", { title: "Recipe Blog - Homepage", categories, food });
   } catch (error) {
     // console.log(error);
     res.send("An error Occured::");
