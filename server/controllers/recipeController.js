@@ -98,3 +98,44 @@ exports.exploreRecipe = async (req, res) => {
     res.status(500).send("An error Occured::");
   }
 };
+
+/*
+ * POST/search *
+ * Search --search.ejs*
+ */
+
+exports.searchRecipe = async (req, res) => {
+  try {
+    let searchTerm = req.body.searchTerm;
+    let recipe = await Recipe.find({
+      $text: { $search: searchTerm, $diacriticSensitive: true },
+    });
+    // res.json(recipe);
+    res.render("search", {
+      title: "Recipe Blog - Search page",
+      recipe,
+    });
+  } catch (error) {
+    res.status(500).send("An error Occured::");
+  }
+};
+
+/*
+ * GET/explore-latest *
+ * Explore Latest --explore-latest.ejs*
+ */
+
+exports.exploreLatest = async (req, res) => {
+  try {
+    const limitNumber = 5;
+
+    const recipe = await Recipe.find({}).sort({ _id: -1 }).limit(limitNumber);
+    // res.json(recipe);
+    res.render("explore-latest", {
+      title: "Recipe Blog - Explore Latest",
+      recipe,
+    });
+  } catch (error) {
+    res.status(500).send("An error Occured::");
+  }
+};
