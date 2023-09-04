@@ -160,3 +160,13 @@ exports.exploreRandom = async (req, res) => {
     res.status(500).send("An error Occured::", error);
   }
 };
+
+/*
+ * GET/submit-recipe *
+ * Submit Recipe --submit-recipe.ejs*
+ */
+exports.submitRecipe = async (req, res) => {
+  res.render("submit-recipe", {
+    title: "Recipe Blog - Submit Recipe",
+  });
+};
