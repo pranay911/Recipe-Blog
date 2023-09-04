@@ -182,6 +182,22 @@ exports.submitRecipe = async (req, res) => {
  */
 exports.submitRecipeOnPost = async (req, res) => {
   try {
+    // File Upload
+    let imageUploadFile;
+    let uploadPath;
+    let newImageName;
+    if (!req.files || Object.keys(req.files).length === 0) {
+      console.log("No files where uploaded.");
+    } else {
+      imageUploadFile = req.files.image;
+      newImageName = Date.now() + imageUploadFile.name;
+      uploadPath =
+        require("path").resolve("./") + "/public/uploads/" + newImageName;
+      imageUploadFile.mv(uploadPath, function (err) {
+        if (err) return res.status(500).send(err);
+      });
+    }
+
     //Added data in DB
     const newRecipe = new Recipe({
       name: req.body.name,
@@ -189,7 +205,7 @@ exports.submitRecipeOnPost = async (req, res) => {
       email: req.body.email,
       ingredients: req.body.ingredients,
       category: req.body.category,
-      image: req.body.image,
+      image: newImageName,
     });
     await newRecipe.save();
     req.flash("infoSubmit", "Recipe has been Added.");
