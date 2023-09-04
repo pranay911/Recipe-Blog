@@ -4,6 +4,14 @@ const express = require("express");
 const expressLayout = require("express-ejs-layouts");
 //Database
 const connectDB = require("./server/models/database");
+//FileUpload
+const fileUpload = require("express-fileupload");
+//Session
+const session = require("express-session");
+//cookieParser
+const cookieParser = require("cookie-parser");
+//Flash Messages
+const flash = require("connect-flash");
 
 //express app
 const app = express();
@@ -22,6 +30,24 @@ app.use(express.static("public"));
 
 //Layout
 app.use(expressLayout);
+
+//Cookies
+app.use(cookieParser("RecipeBlogSecure"));
+
+//session
+app.use(
+  session({
+    secret: "RecipeBlog",
+    saveUninitialized: true,
+    resave: true,
+  })
+);
+
+//flash
+app.use(flash());
+
+//file upload
+app.use(fileUpload);
 
 //all layout store
 app.set("layout", "./layouts/main");
