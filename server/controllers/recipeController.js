@@ -40,7 +40,7 @@ exports.homepage = async (req, res) => {
 
 exports.exploreCategories = async (req, res) => {
   try {
-    //DB Query to Grag categories
+    //DB Query to Grab categories
     //Only 5 categories can Display
     const limitNumber = 5;
     const categories = await Category.find({}).limit(limitNumber);
@@ -55,13 +55,34 @@ exports.exploreCategories = async (req, res) => {
 };
 
 /*
- * GET/recipes *
+ * GET/categories/:id *
+ * Homepage --categories.ejs*
+ */
+
+exports.exploreCategoriesByID = async (req, res) => {
+  try {
+    let categoryId = req.params.id;
+    const limitNumber = 20;
+    const categoryById = await Recipe.find({ category: categoryId }).limit(
+      limitNumber
+    );
+    res.render("categories", {
+      title: "Cooking Blog - Categoreis",
+      categoryById,
+    });
+  } catch (error) {
+    res.satus(500).send({ message: error.message || "Error Occured" });
+  }
+};
+
+/*
+ * GET/recipe/:id *
  * Homepage --recipe.ejs*
  */
 
 exports.exploreRecipe = async (req, res) => {
   try {
-    //DB Query to display each Recipe
+    //DB Query to display each Recipe By ID
     //1. Find Id
     //2. Then Render
 
