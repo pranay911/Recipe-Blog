@@ -47,7 +47,7 @@ app.use(
 app.use(flash());
 
 //file upload
-app.use(fileUpload);
+app.use(fileUpload());
 
 //all layout store
 app.set("layout", "./layouts/main");

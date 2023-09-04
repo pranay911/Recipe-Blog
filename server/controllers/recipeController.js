@@ -166,7 +166,35 @@ exports.exploreRandom = async (req, res) => {
  * Submit Recipe --submit-recipe.ejs*
  */
 exports.submitRecipe = async (req, res) => {
+  const infoErrorObj = req.flash("infoErrors");
+  const infoSubmitObj = req.flash("infoSubmit");
+
   res.render("submit-recipe", {
     title: "Recipe Blog - Submit Recipe",
+    infoErrorObj,
+    infoSubmitObj,
   });
+};
+
+/*
+ * POST/submit-recipe *
+ * Submit Recipe --submit-recipe.ejs*
+ */
+exports.submitRecipeOnPost = async (req, res) => {
+  try {
+    //Added data in DB
+    const newRecipe = new Recipe({
+      name: req.body.name,
+      description: req.body.description,
+      email: req.body.email,
+      ingredients: req.body.ingredients,
+      category: req.body.category,
+      image: req.body.image,
+    });
+    await newRecipe.save();
+    req.flash("infoSubmit", "Recipe has been Added.");
+    res.redirect("/submit-recipe");
+  } catch (error) {
+    req.flash("infoErrors", error);
+  }
 };
