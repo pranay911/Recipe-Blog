@@ -139,3 +139,24 @@ exports.exploreLatest = async (req, res) => {
     res.status(500).send("An error Occured::");
   }
 };
+
+/*
+ * GET/explore-random *
+ * Explore Random --explore-random.ejs* AS JSON
+ */
+
+exports.exploreRandom = async (req, res) => {
+  try {
+    let count = await Recipe.find().countDocuments();
+    let random = Math.floor(Math.random() * count);
+
+    const recipe = await Recipe.findOne().skip(random).exec();
+    // res.json(recipe);
+    res.render("explore-random", {
+      title: "Recipe Blog - Explore Random",
+      recipe,
+    });
+  } catch (error) {
+    res.status(500).send("An error Occured::", error);
+  }
+};

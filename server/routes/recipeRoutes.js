@@ -14,6 +14,7 @@ router.get("/categories", recipeController.exploreCategories);
 router.get("/categories/:id", recipeController.exploreCategoriesByID);
 router.get("/recipe/:id", recipeController.exploreRecipe);
 router.get("/explore-latest", recipeController.exploreLatest);
+router.get("/explore-random", recipeController.exploreRandom);
 
 router.post("/search", recipeController.searchRecipe);
 
